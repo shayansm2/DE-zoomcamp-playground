@@ -1,8 +1,9 @@
 from prefect_sqlalchemy import SqlAlchemyConnector
-from helpers import SingletonMeta
+from Database import Database
 
 
-class PostgresDBConnector(object, metaclass=SingletonMeta):
-    def get(self):
+class PostgresDB(Database):
+    @classmethod
+    def get_connection(cls):
         connection_block = SqlAlchemyConnector.load('postgres-connector')
         return connection_block.get_connection(begin=False)
