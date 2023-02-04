@@ -1,0 +1,2 @@
+- selected dataset: [GitHub archive](https://www.gharchive.org/)
+- project description: [link](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/week_7_project)
