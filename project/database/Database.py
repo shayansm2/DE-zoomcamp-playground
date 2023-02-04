@@ -1,6 +1,6 @@
 from abc import abstractmethod
 import pandas as pd
-from project.utils import SingletonMeta
+from project.utils.SingletonMeta import SingletonMeta
 
 
 class Database(object, metaclass=SingletonMeta):
