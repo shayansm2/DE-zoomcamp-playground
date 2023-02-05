@@ -1,5 +1,4 @@
 import argparse
-from typing import Iterator
 import pandas as pd
 from prefect import flow, task
 

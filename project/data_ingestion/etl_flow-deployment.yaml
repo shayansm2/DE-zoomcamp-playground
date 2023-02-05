@@ -1,0 +1,67 @@
+###
+### A complete description of a Prefect Deployment for flow 'etl-flow'
+###
+name: Parameterized ETL
+description: null
+version: d442059c8118a75985fe12ad0c2f236e
+# The work queue that will handle this deployment's runs
+work_queue_name: default
+work_pool_name: null
+tags: []
+parameters: {
+              years: [2023],
+              months: [1]
+}
+schedule: null
+is_schedule_active: null
+infra_overrides: {}
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  block_type_slug: process
+  _block_type_slug: process
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: etl-flow
+manifest_path: null
+storage: null
+path: /home/neo/DataspellProjects/DE-zoomcamp-playground
+entrypoint: project/data_ingestion/parameterized_etl.py:etl_flow
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties:
+    years:
+      title: years
+      position: 0
+      type: array
+      items:
+        type: integer
+    months:
+      title: months
+      position: 1
+      type: array
+      items:
+        type: integer
+    days:
+      title: days
+      position: 2
+      type: array
+      items:
+        type: integer
+    hours:
+      title: hours
+      position: 3
+      type: array
+      items:
+        type: integer
+  required: null
+  definitions: null
+timestamp: '2023-02-05T09:18:02.331508+00:00'
