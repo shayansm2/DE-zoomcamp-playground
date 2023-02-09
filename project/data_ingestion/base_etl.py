@@ -1,14 +1,16 @@
 import argparse
+
 import pandas as pd
 from prefect import flow, task
 
 from project.utils.os_helpers import download_if_not_exists, unzip
-from project.utils.loggers import print_logger
+from project.utils.decorators import print_logger, timer
 
 from project.database.PostgresDB import PostgresDB
 
 
 @flow(name='ingest-github-archive')
+@timer
 @print_logger
 def etl(year: int, month: int, day: int, hour: int):
     file_path = extract(year, month, day, hour)
@@ -25,6 +27,7 @@ def etl(year: int, month: int, day: int, hour: int):
 
 
 @task(retries=1, cache_result_in_memory=True, log_prints=True)
+@timer
 @print_logger
 def extract(year: int, month: int, day: int, hour: int) -> str:
     download_path = get_download_path(year, month, day, hour)
@@ -41,12 +44,14 @@ def extract(year: int, month: int, day: int, hour: int) -> str:
 
 
 @task(log_prints=True)
+@timer
 @print_logger
 def transform(data: pd.DataFrame) -> pd.DataFrame:
     return data[['id', 'type', 'public', 'created_at']]
 
 
 @task(retries=1, log_prints=True)
+@timer
 @print_logger
 def load(data: pd.DataFrame):
     PostgresDB().insert(data, 'github_archives')
