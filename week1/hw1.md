@@ -104,12 +104,22 @@ order by count(1) desc;
 For the passengers picked up in September 2019 in the zone name Astoria which was the drop off zone that had the largest tip?
 We want the name of the zone, not the id.
 
-Note: it's not a typo, it's `tip` , not `trip`
+*answer:*
+```sql
+select tip_amount, dotz."Zone"
+from ny_taxi.public.green_taxi_data gtd
+         join ny_taxi.public.taxi_zones putz on gtd."PULocationID" = putz."LocationID"
+         join ny_taxi.public.taxi_zones dotz on gtd."DOLocationID" = dotz."LocationID"
+where to_date(lpep_pickup_datetime, 'YYYY-MM') = '2019-09-01'
+  and putz."Zone" = 'Astoria'
+order by tip_amount desc
+limit 1;
+```
 
-- Central Park
-- Jamaica
-- JFK Airport
-- Long Island City/Queens Plaza
+- [ ] Central Park
+- [ ] Jamaica
+- [x] JFK Airport
+- [ ] Long Island City/Queens Plaza
 
 
 
