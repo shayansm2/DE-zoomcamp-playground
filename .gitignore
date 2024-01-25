@@ -1,4 +1,24 @@
+# data
 /week1/ny_taxi_postgres_data/*
+/week1/taxi+_zone_lookup.csv
+/week1/green_tripdata_2019-09.csv.gz
+
+#others
 *.iml
 *.xml
 *.idea
+
+#terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc

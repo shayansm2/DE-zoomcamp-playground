@@ -125,13 +125,7 @@ limit 1;
 
 ## Terraform
 
-In this section homework we'll prepare the environment by creating resources in GCP with Terraform.
-
-In your VM on GCP/Laptop/GitHub Codespace install Terraform. 
-Copy the files from the course repo
-[here](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/01-docker-terraform/1_terraform_gcp/terraform) to your VM/Laptop/GitHub Codespace.
-
-Modify the files as necessary to create a GCP Bucket and Big Query Dataset.
+[terraform file](./main.tf)
 
 
 ## Question 7. Creating Resources
@@ -144,7 +138,97 @@ terraform apply
 
 Paste the output of this command into the homework submission form.
 
+```
+kubernetes_namespace.example: Refreshing state... [id=de-zoomcamp-namespace-week1]
+kubernetes_deployment.example: Refreshing state... [id=de-zoomcamp-namespace-week1/bigquery-emulator]
 
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # kubernetes_deployment.example is tainted, so must be replaced
+-/+ resource "kubernetes_deployment" "example" {
+      ~ id               = "de-zoomcamp-namespace-week1/bigquery-emulator" -> (known after apply)
+        # (1 unchanged attribute hidden)
+
+      ~ metadata {
+          - annotations      = {} -> null
+          ~ generation       = 1 -> (known after apply)
+          - labels           = {} -> null
+            name             = "bigquery-emulator"
+          ~ resource_version = "19192" -> (known after apply)
+          ~ uid              = "73a1c837-e1dd-4332-94dc-117e4545f72d" -> (known after apply)
+            # (1 unchanged attribute hidden)
+        }
+
+      ~ spec {
+            # (5 unchanged attributes hidden)
+
+          - strategy {
+              - type = "RollingUpdate" -> null
+
+              - rolling_update {
+                  - max_surge       = "25%" -> null
+                  - max_unavailable = "25%" -> null
+                }
+            }
+
+          ~ template {
+              ~ metadata {
+                  - annotations      = {} -> null
+                  ~ generation       = 0 -> (known after apply)
+                  + name             = (known after apply)
+                  + resource_version = (known after apply)
+                  + uid              = (known after apply)
+                    # (1 unchanged attribute hidden)
+                }
+              ~ spec {
+                  - active_deadline_seconds          = 0 -> null
+                  + hostname                         = (known after apply)
+                  + node_name                        = (known after apply)
+                  - node_selector                    = {} -> null
+                  ~ scheduler_name                   = "default-scheduler" -> (known after apply)
+                  + service_account_name             = (known after apply)
+                    # (9 unchanged attributes hidden)
+
+                  ~ container {
+                      - args                       = [] -> null
+                      - command                    = [] -> null
+                      ~ image_pull_policy          = "Always" -> (known after apply)
+                        name                       = "bigquery-emulator"
+                      ~ termination_message_policy = "File" -> (known after apply)
+                        # (5 unchanged attributes hidden)
+
+                      ~ port {
+                          - host_port      = 0 -> null
+                            # (2 unchanged attributes hidden)
+                        }
+
+                      - resources {
+                          - limits   = {} -> null
+                          - requests = {} -> null
+                        }
+                    }
+                }
+            }
+
+            # (1 unchanged block hidden)
+        }
+    }
+
+Plan: 1 to add, 0 to change, 1 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+kubernetes_deployment.example: Destroying... [id=de-zoomcamp-namespace-week1/bigquery-emulator]
+kubernetes_deployment.example: Destruction complete after 0s
+kubernetes_deployment.example: Creating...
+```
 ## Submitting the solutions
 
 * Form for submitting: https://courses.datatalks.club/de-zoomcamp-2024/homework/hw01
