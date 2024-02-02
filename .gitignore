@@ -22,3 +22,10 @@ override.tf.json
 *_override.tf.json
 .terraformrc
 terraform.rc
+
+#env file
+**/.env
+
+#mage files
+**/.cache
+**/.operation_history
