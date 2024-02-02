@@ -229,9 +229,3 @@ kubernetes_deployment.example: Destroying... [id=de-zoomcamp-namespace-week1/big
 kubernetes_deployment.example: Destruction complete after 0s
 kubernetes_deployment.example: Creating...
 ```
-## Submitting the solutions
-
-* Form for submitting: https://courses.datatalks.club/de-zoomcamp-2024/homework/hw01
-* You can submit your homework multiple times. In this case, only the last submission will be used. 
-
-Deadline: 29 January, 23:00 CET
