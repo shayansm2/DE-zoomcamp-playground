@@ -29,3 +29,11 @@ terraform.rc
 #mage files
 **/.cache
 **/.operation_history
+**/type.json
+**/statistics.json
+**/suggestions.json
+**/metadata.json
+**/insights.json
+**/data_column_types.json
+**/mage-ai.db
+**/mage_data/*
