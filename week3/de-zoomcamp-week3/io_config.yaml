@@ -1,0 +1,46 @@
+version: 0.1.1
+default:
+  # Default profile created for data IO access.
+  # Add your credentials for the source you use, and delete the rest.
+  # Clickhouse
+  CLICKHOUSE_DATABASE: default
+  CLICKHOUSE_HOST: host.docker.internal
+  CLICKHOUSE_INTERFACE: http
+  CLICKHOUSE_PASSWORD: null
+  CLICKHOUSE_PORT: 8123
+  CLICKHOUSE_USERNAME: null
+  # DuckDB
+  DUCKDB_DATABASE: database
+  DUCKDB_SCHEMA: main
+  # MongoDB
+  # Specify either the connection string or the (host, password, user, port) to connect to MongoDB.
+  MONGODB_CONNECTION_STRING: "mongodb://{username}:{password}@{host}:{port}/"
+  MONGODB_HOST: host
+  MONGODB_PORT: 27017
+  MONGODB_USER: user
+  MONGODB_PASSWORD: password
+  MONGODB_DATABASE: database
+  MONGODB_COLLECTION: collection
+  # Pinot
+  PINOT_HOST: hostname
+  PINOT_PASSWORD: password
+  PINOT_PATH: /query/sql
+  PINOT_PORT: 8000
+  PINOT_SCHEME: http
+  PINOT_USER: user
+  # PostgresSQL
+  POSTGRES_CONNECT_TIMEOUT: 10
+  POSTGRES_DBNAME: postgres
+  POSTGRES_SCHEMA: public # Optional
+  POSTGRES_USER: root
+  POSTGRES_PASSWORD: root
+  POSTGRES_HOST: localhost
+  POSTGRES_PORT: 5432
+dev:
+  POSTGRES_CONNECT_TIMEOUT: 10
+  POSTGRES_DBNAME: postgres
+  POSTGRES_SCHEMA: public # Optional
+  POSTGRES_USER: root
+  POSTGRES_PASSWORD: root
+  POSTGRES_HOST: de-zoomcamp-week3-postgres
+  POSTGRES_PORT: 5432
