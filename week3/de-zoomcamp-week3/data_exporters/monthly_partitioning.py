@@ -34,19 +34,6 @@ def export_data(data, *args, **kwargs):
         CHECK (lpep_pickup_datetime >= '{first_day}' AND lpep_pickup_datetime < '{last_day}');""")
 
     conn.commit()
-
-    cur.execute(
-        """INSERT INTO postgres.public.green_taxi_monthly_clustered
-            SELECT *
-            FROM (select *
-                from postgres.public.green_taxi_data
-                where lpep_pickup_datetime >= '2022-01-01'
-                    and lpep_pickup_datetime < '2023-01-01') as "cleaned_data";""")
-
-    conn.commit()
-
     # Close the cursor and connection
     cur.close()
     conn.close()
-
-
