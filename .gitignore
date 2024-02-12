@@ -37,3 +37,8 @@ terraform.rc
 **/data_column_types.json
 **/mage-ai.db
 **/mage_data/*
+
+#duckdb
+**/*.duckdb**
+**/*.db
+**/*.db.wal
