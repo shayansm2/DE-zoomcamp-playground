@@ -1,7 +1,7 @@
 # DE-zoomcamp-playground
 source: [Data-engineering zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)
 
-- dbt fundamentals badge: [linke](https://www.credential.net/c7417459-3a44-41cc-8121-a9526598d224#gs.4osv01)
+- dbt fundamentals badge: [link](https://www.credential.net/c7417459-3a44-41cc-8121-a9526598d224#gs.4osv01)
 
 reading materials: 
 - [full course notes 1](https://github.com/ziritrion/dataeng-zoomcamp/tree/main/notes)
