@@ -50,29 +50,15 @@ blocks:
 - all_upstream_blocks_executed: true
   color: null
   configuration: {}
-  downstream_blocks: []
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: test-partitioning
-  retry_config: null
-  status: updated
-  timeout: null
-  type: scratchpad
-  upstream_blocks: []
-  uuid: test_partitioning
-- all_upstream_blocks_executed: true
-  color: null
-  configuration: {}
-  downstream_blocks: []
+  downstream_blocks:
+  - move_data_to_partitioned_tbl
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
   name: monthly_partitioning
   retry_config: null
-  status: updated
+  status: executed
   timeout: null
   type: data_exporter
   upstream_blocks:
@@ -80,19 +66,28 @@ blocks:
   uuid: monthly_partitioning
 - all_upstream_blocks_executed: true
   color: null
-  configuration: {}
+  configuration:
+    data_provider: postgres
+    data_provider_profile: dev
+    data_provider_schema: public
+    dbt: {}
+    disable_query_preprocessing: false
+    export_write_policy: append
+    limit: 1000
+    use_raw_sql: true
   downstream_blocks: []
   executor_config: null
   executor_type: local_python
   has_callback: false
-  language: python
-  name: toDuckDB
+  language: sql
+  name: move_data_to_partitioned_tbl
   retry_config: null
-  status: updated
+  status: failed
   timeout: null
   type: data_exporter
-  upstream_blocks: []
-  uuid: toduckdb
+  upstream_blocks:
+  - monthly_partitioning
+  uuid: move_data_to_partitioned_tbl
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}
@@ -114,7 +109,7 @@ settings:
 spark_config: {}
 tags: []
 type: python
-updated_at: '2024-02-08T12:37:37+00:00'
+updated_at: '2024-02-09T17:18:34+00:00'
 uuid: artistic_shield
 variables_dir: /home/src/mage_data/de-zoomcamp-week3
 widgets: []

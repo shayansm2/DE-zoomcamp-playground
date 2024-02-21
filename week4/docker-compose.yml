@@ -6,7 +6,7 @@ services:
       dockerfile: mageai.Dockerfile
       args:
           PROJECT_NAME: ${PROJECT_NAME}
-    container_name: ${PROJECT_NAME}-mageai
+    container_name: ${PROJECT_NAME}_mageai
     environment:
       USER_CODE_PATH: /home/src/${PROJECT_NAME}
       POSTGRES_DBNAME: ${POSTGRES_DBNAME}
@@ -23,7 +23,7 @@ services:
   postgres:
     image: postgres:14
     restart: on-failure
-    container_name: ${PROJECT_NAME}-postgres
+    container_name: ${PROJECT_NAME}_postgres
     environment:
       POSTGRES_DB: ${POSTGRES_DBNAME}
       POSTGRES_USER: ${POSTGRES_USER}
