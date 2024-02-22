@@ -54,7 +54,7 @@ notification_config:
 project_uuid: dc8db662ab4145d78e0abdd2f3523f03
 help_improve_mage: true
 features:
-  add_new_block_v2: false
+  add_new_block_v2: true
   code_block_v2: false
   command_center: false
   compute_management: false

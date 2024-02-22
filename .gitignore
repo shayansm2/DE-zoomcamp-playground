@@ -43,3 +43,15 @@ terraform.rc
 **/*.duckdb**
 **/*.db
 **/*.db.wal
+
+#dbt
+.DS_Store
+**google_credentials.json
+**logs/
+**__pycache__/
+.history
+**/ny_taxi_postgres_data/*
+serving_dir
+.ipynb_checkpoints/
+**/dbt/dbt_packages/*
+**/dbt/target/*
