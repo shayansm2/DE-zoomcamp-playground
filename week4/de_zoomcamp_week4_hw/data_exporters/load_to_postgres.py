@@ -21,7 +21,15 @@ def export_data_to_postgres(df: DataFrame, **kwargs) -> None:
     table_name = kwargs['tbl_name']  # Specify the name of the table to export data to
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
+    print('number of rows for inserting to db: ' +  str(len(df.index)))
 
+    # batch_size = 500000
+    # num_batches = len(df) // batch_size + 1
+    # for i in range(num_batches):
+    #     start_i = i * batch_size
+    #     end_i = (i + 1) * batch_size
+    #     df_batch = df.iloc[start_i:end_i]
+    #     print(f'batch number {i}')
     with Postgres.with_config(ConfigFileLoader(config_path, config_profile)) as loader:
         loader.export(
             df,

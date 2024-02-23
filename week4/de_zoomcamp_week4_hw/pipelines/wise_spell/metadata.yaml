@@ -19,7 +19,7 @@ blocks:
   color: null
   configuration: {}
   downstream_blocks:
-  - load_to_postgres
+  - cleaning
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -35,6 +35,23 @@ blocks:
 - all_upstream_blocks_executed: false
   color: null
   configuration: {}
+  downstream_blocks:
+  - load_to_postgres
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: cleaning
+  retry_config: null
+  status: updated
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - data_loader_from_api
+  uuid: cleaning
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
   downstream_blocks: []
   executor_config: null
   executor_type: local_python
@@ -46,7 +63,7 @@ blocks:
   timeout: null
   type: data_exporter
   upstream_blocks:
-  - data_loader_from_api
+  - cleaning
   uuid: load_to_postgres
 cache_block_output_in_memory: false
 callbacks: []
@@ -84,7 +101,7 @@ settings:
 spark_config: {}
 tags: []
 type: python
-updated_at: '2024-02-20 20:51:48'
+updated_at: '2024-02-23 19:57:24'
 uuid: wise_spell
 variables_dir: /home/src/mage_data/de_zoomcamp_week4_hw
 widgets: []

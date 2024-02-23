@@ -42,4 +42,4 @@ services:
       MB_DB_PASS: ${POSTGRES_PASSWORD}
       MB_DB_HOST: ${POSTGRES_HOST}
     ports:
-      - "3000:3000"
+      - "3000:3000" # metabase dashboard

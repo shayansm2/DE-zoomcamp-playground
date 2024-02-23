@@ -13,18 +13,13 @@ We will use the data loaded for:
 * Building a fact table: `fact_fhv_trips`
 * Create a dashboard 
 
-If you don't have access to GCP, you can do this locally using the ingested data from your Postgres database
-instead. If you have access to GCP, you don't need to do it for local Postgres - only if you want to.
-
-> **Note**: if your answer doesn't match exactly, select the closest option 
-
 ### Question 1: 
 
 **What happens when we execute dbt build --vars '{'is_test_run':'true'}'**
 You'll need to have completed the ["Build the first dbt models"](https://www.youtube.com/watch?v=UVI30Vxzd6c) video. 
 - [ ] It's the same as running *dbt build*
 - [ ] It applies a _limit 100_ to all of our models
-- [ ] It applies a _limit 100_ only to our staging models
+- [x] It applies a _limit 100_ only to our staging models
 - [ ] Nothing
 
 ### Question 2: 
@@ -48,7 +43,7 @@ Similar to what we've done in fact_trips, keep only records with known pickup an
 Run the dbt model without limits (is_test_run: false).
 
 - [ ] 12998722
-- [ ] 22998722
+- [x] 22998722
 - [ ] 32998722
 - [ ] 42998722
 

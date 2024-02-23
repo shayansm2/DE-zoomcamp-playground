@@ -7,5 +7,6 @@ sources:
     tables:
       - name: green_tripdata
       - name: yellow_tripdata
+      - name: fhv_tripdata
          # freshness:
            # error_after: {count: 6, period: hour}
