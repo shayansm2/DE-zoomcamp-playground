@@ -12,6 +12,7 @@ blocks:
       path: dbts/dependencies.yaml
     use_raw_sql: false
   downstream_blocks:
+  - code_gen
   - seed
   executor_config: null
   executor_type: local_python
@@ -62,7 +63,8 @@ blocks:
     file_source:
       path: dbts/run.yaml
     use_raw_sql: false
-  downstream_blocks: []
+  downstream_blocks:
+  - docs
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -75,6 +77,82 @@ blocks:
   upstream_blocks:
   - seed
   uuid: run
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    dbt:
+      command: docs
+    dbt_profile_target: null
+    dbt_project_name: dbt/hw4
+    disable_query_preprocessing: false
+    export_write_policy: append
+    file_source:
+      path: dbts/docs.yaml
+    use_raw_sql: false
+  downstream_blocks:
+  - dag
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: yaml
+  name: docs
+  retry_config: null
+  status: executed
+  timeout: null
+  type: dbt
+  upstream_blocks:
+  - run
+  uuid: docs
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    dbt:
+      command: run-operation
+    dbt_profile_target: ''
+    dbt_project_name: dbt/hw4
+    disable_query_preprocessing: false
+    export_write_policy: append
+    file_source:
+      path: dbts/code_gen.yaml
+    use_raw_sql: false
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: yaml
+  name: code gen
+  retry_config: null
+  status: executed
+  timeout: null
+  type: dbt
+  upstream_blocks:
+  - dependency
+  uuid: code_gen
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    dbt:
+      command: docs
+    dbt_profile_target: ''
+    dbt_project_name: dbt/hw4
+    disable_query_preprocessing: false
+    export_write_policy: append
+    file_source:
+      path: dbts/dag.yaml
+    use_raw_sql: false
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: yaml
+  name: dag
+  retry_config: null
+  status: failed
+  timeout: null
+  type: dbt
+  upstream_blocks:
+  - docs
+  uuid: dag
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}
@@ -96,7 +174,7 @@ settings:
 spark_config: {}
 tags: []
 type: python
-updated_at: '2024-02-23 13:32:22'
+updated_at: '2024-02-23 14:42:24'
 uuid: jeweled_smoke
 variables_dir: /home/src/mage_data/de_zoomcamp_week4_hw
 widgets: []

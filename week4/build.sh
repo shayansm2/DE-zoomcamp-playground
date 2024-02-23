@@ -11,4 +11,4 @@ if [ ! -f ".env" ]; then
     echo POSTGRES_PORT=5432 >> .env
 fi
 
-docker-compose up --build --name de-zoomcamp-hw4
+docker-compose up --build
