@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: staging
+    database: postgres
+    schema: public
+    tables:
+      - name: green_tripdata
+      - name: yellow_tripdata
+         # freshness:
+           # error_after: {count: 6, period: hour}

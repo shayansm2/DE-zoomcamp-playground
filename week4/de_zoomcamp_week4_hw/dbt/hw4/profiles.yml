@@ -1,6 +1,5 @@
 # https://docs.getdbt.com/docs/core/connect-data-platform/profiles.yml
-
-base:
+hw4:
   outputs:
     dev:
       type: postgres
