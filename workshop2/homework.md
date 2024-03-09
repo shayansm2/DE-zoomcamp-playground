@@ -119,11 +119,40 @@ where avg_trip_time <= '00:01:00'
 
 Recreate the MV(s) in question 1, to also find the **number of trips** for the pair of taxi zones with the highest average trip time.
 
+```sql
+drop materialized view taxi_zones_statistics;
+
+create materialized view taxi_zones_statistics as
+with data as (select zdo.zone                                     as drop_off_zone,
+                     zpu.zone                                     as pick_up_zone,
+                     tpep_dropoff_datetime - tpep_pickup_datetime as trip_time
+              from trip_data as t
+                       join taxi_zone as zdo on zdo.location_id = t.DOLocationID
+                       join taxi_zone as zpu on zpu.location_id = t.pulocationid)
+select pick_up_zone,
+       drop_off_zone,
+       TO_CHAR(min(trip_time), 'HH24:MI:SS') as min_trip_time,
+       TO_CHAR(max(trip_time), 'HH24:MI:SS') as max_trip_time,
+       TO_CHAR(avg(trip_time), 'HH24:MI:SS') as avg_trip_time,
+       count(1)                              as count
+from data
+group by drop_off_zone, pick_up_zone;
+
+
+
+with highest_avg_trip_time as (select max(avg_trip_time) as max_avg_time
+                               from taxi_zones_statistics)
+select pick_up_zone, drop_off_zone, count
+from taxi_zones_statistics
+         join highest_avg_trip_time
+              on avg_trip_time = highest_avg_trip_time.max_avg_time;
+```
+
 Options:
-1. 5
-2. 3
-3. 10
-4. 1
+- [ ] 5
+- [ ] 3
+- [ ] 10
+- [x] 1
 
 ## Question 3
 
@@ -136,8 +165,23 @@ to create a filter condition based on the latest pickup time.
 
 NOTE: For this question `17 hours` was picked to ensure we have enough data to work with.
 
+```sql
+with data as (select zpu.zone as pick_up_zone,
+                     tpep_pickup_datetime
+              from trip_data as t
+                       join taxi_zone as zpu on zpu.location_id = t.pulocationid),
+     max_pickup_time as (select max(tpep_pickup_datetime) as time
+                         from trip_data)
+select pick_up_zone
+from data
+         join max_pickup_time on data.tpep_pickup_datetime <= max_pickup_time.time
+    and data.tpep_pickup_datetime >= max_pickup_time.time - INTERVAL '17 hours'
+group by pick_up_zone
+order by count(1) desc limit 3;
+```
+
 Options:
-1. Clinton East, Upper East Side North, Penn Station
-2. LaGuardia Airport, Lincoln Square East, JFK Airport
-3. Midtown Center, Upper East Side South, Upper East Side North
-4. LaGuardia Airport, Midtown Center, Upper East Side North
+- [ ] Clinton East, Upper East Side North, Penn Station
+- [x] LaGuardia Airport, Lincoln Square East, JFK Airport
+- [ ] Midtown Center, Upper East Side South, Upper East Side North
+- [ ] LaGuardia Airport, Midtown Center, Upper East Side North
