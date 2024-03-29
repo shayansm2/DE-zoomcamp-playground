@@ -55,3 +55,8 @@ serving_dir
 .ipynb_checkpoints/
 **/dbt/dbt_packages/*
 **/dbt/target/*
+
+#workshop2
+/workshop2/slides.pdf
+/workshop2/data
+/.venv/
