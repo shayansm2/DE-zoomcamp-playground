@@ -43,9 +43,6 @@ want to have a separate virtual environment for that)
 pip install kafka-python
 ```
 
-You can start a jupyter notebook in your solution folder or
-create a script
-
 Let's try to connect to our server:
 
 ```python
@@ -57,7 +54,7 @@ from kafka import KafkaProducer
 def json_serializer(data):
     return json.dumps(data).encode('utf-8')
 
-server = 'localhost:9092'
+server = 'redpanda-1:29092'
 
 producer = KafkaProducer(
     bootstrap_servers=[server],
@@ -67,9 +64,12 @@ producer = KafkaProducer(
 producer.bootstrap_connected()
 ```
 
-Provided that you can connect to the server, what's the output
-of the last command?
+Provided that you can connect to the server, what's the output of the last command?
 
+jupyter notebook: [link](./hw9.ipynb)
+```
+‍‍‍‍‍‍True
+```
 
 ## Question 4. Sending data to the stream
 
@@ -94,11 +94,9 @@ print(f'took {(t1 - t0):.2f} seconds')
 
 How much time did it take? Where did it spend most of the time?
 
-* Sending the messages
-* Flushing
-* Both took approximately the same amount of time
-
-(Don't remove `time.sleep` when answering this question)
+- [ ] Sending the messages
+- [ ] Flushing
+- [x] Both took approximately the same amount of time
 
 
 ## Reading data with `rpk`
@@ -110,8 +108,7 @@ with `rpk`:
 rpk topic consume test-topic
 ```
 
-Run the command above and send the messages one more time to 
-see them
+Run the command above and send the messages one more time to see them
 
 
 ## Sending the taxi data
@@ -149,6 +146,9 @@ to `iterrows`
 * How much time in seconds did it take? (You can round it to a whole number)
 * Make sure you don't include sleeps in your code
 
+```
+output: 32s
+```
 
 ## Creating the PySpark consumer
 
