@@ -11,32 +11,35 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class GitHibEventsPublisher {
-    private static String bootstrapServer = "localhost:9092";
-    private static String topicName = "test_topic";
+    private static final String BOOTSTRAP_SERVER = "localhost:9092";
+    private static final String TOPIC_NAME = "github_events";
 
     public static void main(String[] args) throws IOException {
         KafkaProducer<String, String> producer = new KafkaProducer<>(getProperties());
-        BufferedReader reader = new BufferedReader(new FileReader("/Users/shayan/personal/DE-zoomcamp-playground/kafka-playground/files/2023-01-01-15.json"));
+        BufferedReader reader = new BufferedReader(new FileReader(getFilePath()));
         String line;
         int counter = 0;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
-            ProducerRecord<String, String> record = new ProducerRecord<>(topicName, line);
+        int maxCounter = 2000;
+        while ((line = reader.readLine()) != null && counter < maxCounter) {
+            ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, line);
             producer.send(record);
             counter++;
-            if (counter > 5) {
-                break;
+            if (counter % 100 == 0) {
+                System.out.printf("sent %d events to kafka.\n", counter);
             }
         }
         producer.flush();
-        System.out.println("DONE");
         reader.close();
+    }
+
+    private static String getFilePath() {
+        return "./files/2023-01-01-15.json";
     }
 
     private static Properties getProperties() {
         Properties properties = new Properties();
 
-        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
+        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVER);
         properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
