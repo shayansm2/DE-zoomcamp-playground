@@ -3,8 +3,12 @@ services:
   elasticsearch:
     container_name: elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:8.13.1
-    # 8.x
-    environment: [ 'CLI_JAVA_OPTS=-Xms2g -Xmx2g','bootstrap.memory_lock=true','discovery.type=single-node','xpack.security.enabled=false', 'xpack.security.enrollment.enabled=false' ]
+    environment:
+      CLI_JAVA_OPTS: "-Xms2g -Xmx2g"
+      bootstrap.memory_lock: true
+      discovery.type: single-node
+      xpack.security.enabled: false
+      xpack.security.enrollment.enabled: false
     ports:
       - 9200:9200
     networks:
@@ -38,6 +42,61 @@ services:
           cpus: '2.0'
         reservations:
           cpus: '1.0'
+
+  redpanda-1:
+    image: docker.redpanda.com/vectorized/redpanda:v22.3.5
+    container_name: redpanda-node
+    command:
+      - redpanda
+      - start
+      - --smp
+      - '1'
+      - --reserve-memory
+      - 0M
+      - --overprovisioned
+      - --node-id
+      - '1'
+      - --kafka-addr
+      - PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
+      - --advertise-kafka-addr
+      - PLAINTEXT://redpanda-1:29092,OUTSIDE://localhost:9092
+      - --pandaproxy-addr
+      - PLAINTEXT://0.0.0.0:28082,OUTSIDE://0.0.0.0:8082
+      - --advertise-pandaproxy-addr
+      - PLAINTEXT://redpanda-1:28082,OUTSIDE://localhost:8082
+      - --rpc-addr
+      - 0.0.0.0:33145
+      - --advertise-rpc-addr
+      - redpanda-1:33145
+    ports:
+      - 8082:8082
+      - 9092:9092
+      - 9644:9644
+      - 28082:28082
+      - 29092:29092
+
+  redpanda-console:
+    image: docker.redpanda.com/redpandadata/console:v2.2.2
+    container_name: redpanda-console-panel
+    entrypoint: /bin/sh
+    command: -c "echo \"$$CONSOLE_CONFIG_FILE\" > /tmp/config.yml; /app/console"
+    environment:
+      CONFIG_FILEPATH: /tmp/config.yml
+      CONSOLE_CONFIG_FILE: |
+        kafka:
+          brokers: ["redpanda-1:29092"]
+          schemaRegistry:
+            enabled: false
+        redpanda:
+          adminApi:
+            enabled: true
+            urls: ["http://redpanda-1:9644"]
+        connect:
+          enabled: false
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redpanda-1
 
 networks:
   elastic:
