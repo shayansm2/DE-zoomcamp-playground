@@ -19,7 +19,7 @@ import java.util.Properties;
 import java.util.zip.GZIPInputStream;
 
 public class GitHibEventsPublisher {
-    private static final int maxCounter = 2000;
+    private static final Integer maxCounter = null;
     private static final int sleepTime = 1000;
 
     public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException {
@@ -32,7 +32,7 @@ public class GitHibEventsPublisher {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line;
         int counter = 0;
-        while ((line = reader.readLine()) != null && counter < maxCounter) {
+        while ((line = reader.readLine()) != null && (maxCounter == null || counter < maxCounter)) {
             ProducerRecord<String, String> record = new ProducerRecord<>(Configs.KAFKA_TOPIC_NAME, line);
             producer.send(record);
             counter++;

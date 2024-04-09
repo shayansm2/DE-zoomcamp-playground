@@ -36,7 +36,7 @@ public class GitHubEventListener {
                 esClient.index(i -> i
                         .index(Configs.ELASTICSEARCH_INDEX_NAME)
                         .id(jsonRecord.getString("id"))
-                        .withJson(new StringReader(jsonRecord.get("actor").toString()))
+                        .withJson(new StringReader(jsonRecord.toString()))
                 );
 
                 if (counter % 100 == 0) {
