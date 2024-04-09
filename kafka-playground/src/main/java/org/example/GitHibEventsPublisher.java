@@ -33,7 +33,7 @@ public class GitHibEventsPublisher {
         String line;
         int counter = 0;
         while ((line = reader.readLine()) != null && counter < maxCounter) {
-            ProducerRecord<String, String> record = new ProducerRecord<>(KafkaConfigs.TOPIC_NAME, line);
+            ProducerRecord<String, String> record = new ProducerRecord<>(Configs.KAFKA_TOPIC_NAME, line);
             producer.send(record);
             counter++;
             if (counter % 100 == 0) {
@@ -99,7 +99,7 @@ public class GitHibEventsPublisher {
     private static Properties getProperties() {
         Properties properties = new Properties();
 
-        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConfigs.BOOTSTRAP_SERVER);
+        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, Configs.KAFKA_BOOTSTRAP_SERVER);
         properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
