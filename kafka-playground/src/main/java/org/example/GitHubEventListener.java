@@ -11,15 +11,13 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.elasticsearch.client.RestClient;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.time.Duration;
 import java.util.*;
 
 public class GitHubEventListener {
-    private static final String ConsumerGroupName = "group-test-1";
+    private static final String ConsumerGroupName = "group-test-2";
 
     public static void main(String[] args) throws IOException {
         KafkaConsumer<String, String> consumer = getKafkaConsumer();
@@ -31,12 +29,12 @@ public class GitHubEventListener {
             for (ConsumerRecord<String, String> record : records) {
                 counter++;
 
-                JSONObject jsonRecord = new JSONObject(record.value());
+                GitHubEventData eventData = new GitHubEventData(record.value());
 
                 esClient.index(i -> i
-                        .index(Configs.ELASTICSEARCH_INDEX_NAME)
-                        .id(jsonRecord.getString("id"))
-                        .withJson(new StringReader(jsonRecord.toString()))
+                        .index(Configs.ELASTICSEARCH_INDEX_EVENTS)
+                        .id(eventData.id)
+                        .document(eventData)
                 );
 
                 if (counter % 100 == 0) {

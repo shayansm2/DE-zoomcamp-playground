@@ -15,13 +15,16 @@ public class InitGitHubElasticsearchIndex {
     public static void main(String[] args) throws IOException {
         ElasticsearchClient esClient = getElasticSearchClient();
         IndexSettings settings = new IndexSettings.Builder()
-                .mapping(m -> m.totalFields(t -> t.limit(2000)))
+//                .mapping(m -> m.totalFields(t -> t.limit(2000)))
+                .numberOfReplicas("0")
                 .build();
-        CreateIndexRequest request = new CreateIndexRequest.Builder()
-                .index(Configs.ELASTICSEARCH_INDEX_NAME)
+
+        CreateIndexRequest indexRequest = new CreateIndexRequest.Builder()
+                .index(Configs.ELASTICSEARCH_INDEX_EVENTS)
                 .settings(settings)
                 .build();
-        esClient.indices().create(request);
+
+        esClient.indices().create(indexRequest);
     }
 
     private static ElasticsearchClient getElasticSearchClient() {

@@ -23,9 +23,9 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '2.0'
+          cpus: '3.0'
         reservations:
-          cpus: '1.0'
+          cpus: '2.0'
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.13.1
