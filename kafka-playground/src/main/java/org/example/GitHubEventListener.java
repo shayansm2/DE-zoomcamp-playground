@@ -1,16 +1,11 @@
 package org.example;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.json.jackson.JacksonJsonpMapper;
-import co.elastic.clients.transport.ElasticsearchTransport;
-import co.elastic.clients.transport.rest_client.RestClientTransport;
-import org.apache.http.HttpHost;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.elasticsearch.client.RestClient;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -21,7 +16,7 @@ public class GitHubEventListener {
 
     public static void main(String[] args) throws IOException {
         KafkaConsumer<String, String> consumer = getKafkaConsumer();
-        ElasticsearchClient esClient = getElasticSearchClient();
+        ElasticsearchClient esClient = ElasticSearchClient.get();
 
         int counter = 0;
         ConsumerRecords<String, String> records;
@@ -37,7 +32,7 @@ public class GitHubEventListener {
                         .document(eventData)
                 );
 
-                if (counter % 100 == 0) {
+                if (counter % 1000 == 0) {
                     System.out.printf("indexed %d\t records\n", counter);
                 }
             }
@@ -48,12 +43,6 @@ public class GitHubEventListener {
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(getProperties());
         consumer.subscribe(List.of(Configs.KAFKA_TOPIC_NAME));
         return consumer;
-    }
-
-    private static ElasticsearchClient getElasticSearchClient() {
-        RestClient restClient = RestClient.builder(HttpHost.create(Configs.ELASTICSEARCH_SERVER)).build();
-        ElasticsearchTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
-        return new ElasticsearchClient(transport);
     }
 
     public static Properties getProperties() {
