@@ -10,13 +10,19 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder;
+
+import java.util.Objects;
 
 public class ElasticSearchClient {
     public static ElasticsearchClient get() {
-        RestClient restClient = RestClient
-                .builder(HttpHost.create(Configs.ELASTICSEARCH_SERVER))
-                .setHttpClientConfigCallback(httpAsyncClientBuilder -> httpAsyncClientBuilder.setDefaultCredentialsProvider(credentialsProvider()))
-                .build();
+        boolean isInCloud = Objects.equals(Configs.MODE, String.valueOf(Configs.Modes.CLOUD));
+        String server = isInCloud ? Configs.ELASTICSEARCH_SERVER_CLOUD : Configs.ELASTICSEARCH_SERVER_LOCAL;
+        RestClientBuilder builder = RestClient.builder(HttpHost.create(server));
+        if (isInCloud) {
+            builder.setHttpClientConfigCallback(httpAsyncClientBuilder -> httpAsyncClientBuilder.setDefaultCredentialsProvider(credentialsProvider()));
+        }
+        RestClient restClient = builder.build();
         ElasticsearchTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
         return new ElasticsearchClient(transport);
     }
