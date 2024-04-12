@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.*;
 
-public class GitHubEventListener {
+public class GitHubEventElasticSearchIndexer {
     private static final String ConsumerGroupName = "group-test-3";
 
     public static void main(String[] args) throws IOException {

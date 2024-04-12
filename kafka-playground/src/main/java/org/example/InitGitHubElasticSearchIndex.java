@@ -6,7 +6,7 @@ import co.elastic.clients.elasticsearch.indices.IndexSettings;
 
 import java.io.IOException;
 
-public class InitGitHubElasticsearchIndex {
+public class InitGitHubElasticSearchIndex {
     public static void main(String[] args) throws IOException {
         ElasticsearchClient esClient = ElasticSearchClient.get();
         IndexSettings settings = new IndexSettings.Builder()
