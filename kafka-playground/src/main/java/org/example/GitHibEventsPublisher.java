@@ -19,15 +19,15 @@ import java.util.Properties;
 import java.util.zip.GZIPInputStream;
 
 public class GitHibEventsPublisher {
-    private static final Integer maxCounter = null;
+    private static final Integer maxCounter = 400000;
     private static final int sleepTime = 1000;
 
-    public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException {
+    public static void main(String[] args) throws IOException, URISyntaxException {
         String filePath = downloadLastGitHubArchiveData();
         publishFrom(filePath);
     }
 
-    private static void publishFrom(String filePath) throws IOException, InterruptedException {
+    private static void publishFrom(String filePath) throws IOException {
         KafkaProducer<String, String> producer = new KafkaProducer<>(getProperties());
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line;
@@ -36,8 +36,7 @@ public class GitHibEventsPublisher {
             ProducerRecord<String, String> record = new ProducerRecord<>(Configs.KAFKA_TOPIC_NAME, line);
             producer.send(record);
             counter++;
-            if (counter % 100 == 0) {
-                Thread.sleep(sleepTime);
+            if (counter % 1000 == 0) {
                 System.out.printf("sent %d \tevents to kafka.\n", counter);
             }
         }

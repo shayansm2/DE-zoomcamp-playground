@@ -1,6 +1,7 @@
 package org.example;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.BulkRequest;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -12,7 +13,7 @@ import java.time.Duration;
 import java.util.*;
 
 public class GitHubEventListener {
-    private static final String ConsumerGroupName = "group-test-2";
+    private static final String ConsumerGroupName = "group-test-3";
 
     public static void main(String[] args) throws IOException {
         KafkaConsumer<String, String> consumer = getKafkaConsumer();
@@ -21,21 +22,24 @@ public class GitHubEventListener {
         int counter = 0;
         ConsumerRecords<String, String> records;
         while ((records = consumer.poll(Duration.ofSeconds(1))) != null) {
+            BulkRequest.Builder builder = new BulkRequest.Builder();
             for (ConsumerRecord<String, String> record : records) {
                 counter++;
-
                 GitHubEventData eventData = new GitHubEventData(record.value());
-
-                esClient.index(i -> i
-                        .index(Configs.ELASTICSEARCH_INDEX_EVENTS)
-                        .id(eventData.id)
-                        .document(eventData)
+                builder.operations(op -> op
+                        .index(i -> i
+                                .index(Configs.ELASTICSEARCH_INDEX_EVENTS)
+                                .id(eventData.id)
+                                .document(eventData)
+                        )
                 );
-
-                if (counter % 1000 == 0) {
-                    System.out.printf("indexed %d\t records\n", counter);
-                }
             }
+            if (records.isEmpty()) {
+                continue;
+            }
+            BulkRequest request = builder.build();
+            esClient.bulk(request);
+            System.out.printf("indexed %d\t records\n", counter);
         }
     }
 
