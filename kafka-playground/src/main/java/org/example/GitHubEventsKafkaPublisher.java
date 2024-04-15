@@ -10,9 +10,8 @@ import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.Properties;
 
-public class GitHibEventsKafkaPublisher {
+public class GitHubEventsKafkaPublisher {
     private static final Integer maxCounter = 400000;
-    private static final int sleepTime = 1000;
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         String[] filePaths = prepareFiles();
