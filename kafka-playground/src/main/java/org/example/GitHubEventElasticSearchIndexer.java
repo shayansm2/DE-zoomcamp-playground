@@ -7,6 +7,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -25,7 +26,14 @@ public class GitHubEventElasticSearchIndexer {
             BulkRequest.Builder builder = new BulkRequest.Builder();
             for (ConsumerRecord<String, String> record : records) {
                 counter++;
-                GitHubEventData eventData = new GitHubEventData(record.value());
+                GitHubEventData eventData;
+                try {
+                    eventData = new GitHubEventData(record.value());
+                } catch (JSONException exception) {
+                    System.out.println(STR."count not send this event: \{record.value()}");
+                    continue;
+                }
+
                 builder.operations(op -> op
                         .index(i -> i
                                 .index(Configs.ELASTICSEARCH_INDEX_EVENTS)
