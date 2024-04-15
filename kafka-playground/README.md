@@ -1,4 +1,4 @@
-# Github Events
+# GitHub Events
 
 ![schema.png](files/overview.png)
 description
@@ -21,11 +21,20 @@ Project Structure:
 
 ### Data ingestion (Stream)
 
-### Data warehouse
+### DataBase
 
 ### Transformations
 
 ### Dashboard
+
+![discover.jpeg](files/discover.jpeg)
+![dashboard.png](files/dashboard.png)
+
+- dashboard url: https://de-zoomcamp-project2-dashboard.darkube.app
+- username: `visitor`
+- password: `visitorpassword`
+
+add your analysis and insights and GitHub yearly report here.
 
 ### Reproducibility
 
@@ -34,7 +43,7 @@ how to build:
 1. clone this repo using the below command
 
 ```bash
-git clone https://github.com/shayansm2/tech-career-explorer.git
+git clone 
 ```
 
 2. build the project
@@ -47,13 +56,7 @@ cd tech-career-explorer
 add execution access to build file
 
 ```bash
-chmod +x build.sh
-```
-
-start building
-
-```bash
-./build.sh
+docker 
 ```
 
 have in mind that you should have a running docker in your system for building this project.
@@ -66,4 +69,5 @@ have in mind that you should have a running docker in your system for building t
 | [dbt docs](http://localhost:8080/)                                     | for checking dbt docs and lineage     |
 | [metaase dahsboard](http://localhost:3000/dashboard/1-job-positions)   | for checking the dashboards           |
 | localhost:5432                                                         | connecting to the postgresql database |
-| [project board](https://github.com/users/shayansm2/projects/7/views/2) | for checking todos and done actions   |
+| localhost:5432                                                         | connecting to the postgresql database |
+| localhost:5432                                                         | connecting to the postgresql database |
