@@ -90,32 +90,28 @@ you can check the kibana dashboard using this link:
 - username: `visitor`
 - password: `visitorpassword`
 
-add your analysis and insights and GitHub yearly report here.
-
 ### Reproducibility
 
-how to build:
-
-0. install docker (or open docker desktop)
-1. clone this repo using the below command
+1. install docker / open docker desktop
+2. clone this repo using the below command
 
 ```bash
 git clone https://github.com/shayansm2/DE-zoomcamp-playground.git
 ```
 
-2. go to the project folder
+3. go to the project folder
 
 ```bash
 cd DE-zoomcamp-playground/github-events-analyzer
 ```
 
-3. run the following docker command
+4. run the following docker command
 
 ```bash
 docker compose up -d
 ```
 
-4. go to the java project directory and run the kafka producer
+5. go to the java project directory and run the kafka producer
 
 ```bash
 cd src/main/java/org/example/
@@ -123,11 +119,23 @@ javac GitHubEventsKafkaPublisher.java
 java GitHubEventsKafkaPublisher
 ```
 
-5. run the kafka consumer and elasticsearch indexer
+6. run the kafka consumer and elasticsearch indexer
 
 ```bash
 javac GitHubEventElasticSearchIndexer.java
 java GitHubEventElasticSearchIndexer
 ```
+
+7. checkout the project using this table
+
+| address                                                        | usage                                                            |
+|----------------------------------------------------------------|------------------------------------------------------------------|
+| localhost:9092                                                 | redpanda node                                                    |
+| [localhost:8080](localhost:8080)                               | redpanda console                                                 |
+| [localhost:9200](localhost:9200)                               | elasticsearch node                                               |
+| [localhost:5601](localhost:5601)                               | kibana (local)                                                   |
+| [elasticvue](https://elasticvue.com/)                          | elasticvue site for downloading its app or its browser extension |
+| https://data.gharchive.org/{year}-{month}-{day}-{hour}.json.gz | downloading github events data fro a specific time               |
+| https://de-zoomcamp-project2-dashboard.darkube.app             | kibana (cloud)                                                   |
 
 have in mind that you should have a running docker in your system for building this project.
