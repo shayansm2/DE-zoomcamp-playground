@@ -20,9 +20,10 @@ Project Structure:
 ## Cloud
 
 ### Data ingestion (Stream)
+![img.png](files/redpanda.png)
 
 ### DataBase
-
+![img.png](files/elasticvue.png)
 ### Transformations
 
 ### Dashboard
