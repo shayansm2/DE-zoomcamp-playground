@@ -92,7 +92,7 @@ you can check the kibana dashboard using this link:
 
 ### Reproducibility
 
-1. install docker / open docker desktop
+1. install docker / open docker desktop. install Maven.
 2. clone this repo using the below command
 
 ```bash
@@ -111,7 +111,13 @@ cd DE-zoomcamp-playground/github-events-analyzer
 docker compose up -d
 ```
 
-5. go to the java project directory and run the kafka producer
+5. install maven dependencies with this command
+
+```bash
+mvn clean install
+```
+   
+6. go to the java project directory and run the kafka producer
 
 ```bash
 cd src/main/java/org/example/
@@ -119,14 +125,14 @@ javac GitHubEventsKafkaPublisher.java
 java GitHubEventsKafkaPublisher
 ```
 
-6. run the kafka consumer and elasticsearch indexer
+7. run the kafka consumer and elasticsearch indexer
 
 ```bash
 javac GitHubEventElasticSearchIndexer.java
 java GitHubEventElasticSearchIndexer
 ```
 
-7. checkout the project using this table
+8. checkout the project using this table
 
 | address                                                        | usage                                                            |
 |----------------------------------------------------------------|------------------------------------------------------------------|
